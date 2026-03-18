@@ -1,132 +1,457 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Relájate y Disfruta Corralejo | Frente al mar</title>
-  <meta name="description" content="Apartamento vacacional en Corralejo frente al mar. 3 habitaciones, hasta 4 personas. Reserva directa por WhatsApp.">
-  
+  <meta name="description" content="Apartamento vacacional frente al mar en Corralejo. 3 habitaciones, hasta 4 personas, terraza y vistas espectaculares. Reserva directa por WhatsApp." />
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
+    :root{
+      --bg:#f6f7fb;
+      --text:#162033;
+      --muted:#5d6880;
+      --primary:#0d1b3d;
+      --accent:#25d366;
+      --card:#ffffff;
+      --line:#e7ebf3;
+      --radius:22px;
+      --shadow:0 18px 45px rgba(13,27,61,.10);
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 24px;
+      border-radius:999px;
+      font-weight:700;
+      transition:.2s ease;
+      border:none;
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-wa{background:var(--accent);color:#fff}
+    .btn-dark{background:#fff;color:var(--primary)}
+    .hero{
+      position:relative;
+      min-height:86vh;
+      display:flex;
+      align-items:center;
+      color:#fff;
+      background:
+        linear-gradient(90deg, rgba(8,18,44,.78) 0%, rgba(8,18,44,.56) 38%, rgba(8,18,44,.25) 100%),
+        url("20200508_171216.jpg") center/cover no-repeat;
+    }
+    .hero-inner{
+      padding:90px 0;
+      max-width:760px;
+    }
+    .eyebrow{
+      display:inline-block;
+      padding:9px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.25);
+      margin-bottom:18px;
+      font-size:14px;
+      font-weight:700;
+    }
+    h1{
+      margin:0 0 14px;
+      font-size:clamp(40px, 6vw, 68px);
+      line-height:1.04;
+    }
+    .lead{
+      font-size:clamp(18px, 2.2vw, 24px);
+      margin:0;
+      opacity:.96;
+      max-width:650px;
+    }
+    .hero-actions{
+      margin-top:28px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+    .section{padding:76px 0}
+    h2{
+      font-size:clamp(28px, 4vw, 42px);
+      margin:0 0 14px;
+    }
+    .muted{color:var(--muted)}
+    .panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:28px;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:26px;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:24px;
+    }
+    .stat{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:16px;
+      text-align:center;
+    }
+    .stat strong{
+      display:block;
+      font-size:30px;
+      margin-bottom:4px;
+    }
+    .features{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+    .feature{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      font-weight:600;
     }
 
-    header {
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover;
-      color: white;
-      text-align: center;
-      padding: 100px 20px;
+    .gallery-wrap{
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:16px;
+      margin-top:24px;
+    }
+    .main-photo{
+      overflow:hidden;
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      min-height:420px;
+      background:#ddd;
+    }
+    .main-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .side-photos{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .thumb{
+      overflow:hidden;
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      background:#ddd;
+      min-height:200px;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .25s ease;
+    }
+    .thumb:hover img,
+    .main-photo:hover img{transform:scale(1.03)}
+
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:18px;
+    }
+    .card{
+      overflow:hidden;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+    }
+    .card img{
+      width:100%;
+      height:260px;
+      object-fit:cover;
+    }
+    .card p{
+      margin:0;
+      padding:14px 16px;
+      font-weight:700;
     }
 
-    header h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
+    .price-grid, .review-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:18px;
     }
-
-    header p {
-      font-size: 18px;
-      margin-bottom: 20px;
+    .price, .review{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:24px;
     }
-
-    .btn {
-      background: #25D366;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 18px;
-      display: inline-block;
+    .price .amount{
+      font-size:38px;
+      font-weight:800;
+      margin-top:8px;
     }
-
-    section {
-      padding: 50px 20px;
-      max-width: 1000px;
-      margin: auto;
+    .map{
+      width:100%;
+      height:360px;
+      border:0;
+      border-radius:22px;
+      box-shadow:var(--shadow);
     }
-
-    h2 {
-      margin-bottom: 20px;
+    .cta{
+      background:linear-gradient(135deg,#0d1b3d,#1c2f63);
+      color:#fff;
+      border-radius:30px;
+      padding:42px;
+      box-shadow:var(--shadow);
     }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      padding:30px 0 50px;
+      font-size:14px;
     }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    .floating-wa{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:99;
+      background:var(--accent);
+      color:#fff;
+      padding:14px 18px;
+      border-radius:999px;
+      font-weight:800;
+      box-shadow:0 12px 28px rgba(37,211,102,.35);
     }
-
-    iframe {
-      width: 100%;
-      border: 0;
-      border-radius: 10px;
+    @media (max-width:980px){
+      .grid-2,
+      .gallery-wrap,
+      .price-grid,
+      .review-grid,
+      .stats,
+      .gallery-grid{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr}
+      .side-photos{grid-template-columns:1fr 1fr}
+      .main-photo{min-height:300px}
     }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #111;
-      color: white;
+    @media (max-width:640px){
+      .side-photos{grid-template-columns:1fr}
+      .thumb{min-height:220px}
+      .card img{height:220px}
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Relájate y Disfruta Corralejo</h1>
-  <p>Apartamento frente al mar · Hasta 4 personas</p>
-  <a class="btn" href="https://wa.me/34607511354?text=Hola%20quiero%20reservar%20el%20apartamento">Reservar por WhatsApp</a>
-</header>
+  <header class="hero">
+    <div class="container hero-inner">
+      <div class="eyebrow">Frente a la playa · Corralejo · Reserva directa</div>
+      <h1>Relájate y Disfruta Corralejo</h1>
+      <p class="lead">
+        Apartamento vacacional frente al mar en Corralejo, con 3 habitaciones,
+        terraza cerrada y espacio ideal para hasta 4 personas.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20Rel%C3%A1jate%20y%20Disfruta%20Corralejo">Reservar por WhatsApp</a>
+        <a class="btn btn-dark" href="#galeria">Ver fotos</a>
+      </div>
+    </div>
+  </header>
 
-<section>
-  <h2>🌴 El alojamiento</h2>
-  <p>
-    Disfruta de una estancia única en Corralejo, en un apartamento acogedor frente al mar.
-    Ideal para desconectar, relajarte y disfrutar del sol de Fuerteventura.
-  </p>
-</section>
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        <div class="panel">
+          <h2>Tu estancia frente al mar</h2>
+          <p class="muted">
+            Disfruta de una escapada especial en Corralejo, en un apartamento acogedor
+            situado en una ubicación privilegiada frente a la playa. Ideal para descansar,
+            disfrutar de las vistas y vivir Fuerteventura con toda la comodidad.
+          </p>
 
-<section>
-  <h2>🏡 Características</h2>
-  <div class="grid">
-    <div class="card">✔ Hasta 4 personas</div>
-    <div class="card">✔ 3 habitaciones</div>
-    <div class="card">✔ Vistas al mar</div>
-    <div class="card">✔ Terraza privada</div>
-    <div class="card">✔ Cocina equipada</div>
-    <div class="card">✔ WiFi incluido</div>
-  </div>
-</section>
+          <div class="stats">
+            <div class="stat"><strong>4</strong>personas</div>
+            <div class="stat"><strong>3</strong>habitaciones</div>
+            <div class="stat"><strong>1</strong>baño</div>
+            <div class="stat"><strong>1ª</strong>línea playa</div>
+          </div>
+        </div>
 
-<section>
-  <h2>📍 Ubicación</h2>
-  <p>Ubicado en Corralejo, a pocos pasos de la playa.</p>
-  <iframe 
-    src="https://maps.google.com/maps?q=Corralejo&t=&z=13&ie=UTF8&iwloc=&output=embed"
-    height="300">
-  </iframe>
-</section>
+        <div class="panel">
+          <h2>Lo que hace único este alojamiento</h2>
+          <div class="features">
+            <div class="feature">Frente a la playa</div>
+            <div class="feature">Terraza privada con vistas</div>
+            <div class="feature">1 dormitorio con cama doble</div>
+            <div class="feature">2 dormitorios con cama individual</div>
+            <div class="feature">Cocina equipada</div>
+            <div class="feature">Salón luminoso con ventanales</div>
+            <div class="feature">Ubicación excelente en Corralejo</div>
+            <div class="feature">Reserva directa por WhatsApp</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section>
-  <h2>🔥 Reserva directa y ahorra</h2>
-  <p>
-    Reserva directamente por WhatsApp y consigue el mejor precio sin comisiones.
-  </p>
-  <a class="btn" href="https://wa.me/34607511354?text=Hola%20quiero%20información%20sobre%20fechas">Consultar disponibilidad</a>
-</section>
+  <section class="section" id="galeria">
+    <div class="container">
+      <h2>Galería</h2>
+      <p class="muted">Imágenes reales del apartamento para que veas sus espacios, su distribución y sus vistas al mar.</p>
 
-<footer>
-  © Relájate y Disfruta Corralejo · Reserva directa
-</footer>
+      <div class="gallery-wrap">
+        <div class="main-photo">
+          <img src="20200508_171216.jpg" alt="Terraza cerrada con vistas al mar">
+        </div>
+        <div class="side-photos">
+          <div class="thumb"><img src="20200508_172202.jpg" alt="Vistas al mar desde el salón"></div>
+          <div class="thumb"><img src="20200508_171559.jpg" alt="Dormitorio principal"></div>
+          <div class="thumb"><img src="20200508_171348.jpg" alt="Cocina equipada"></div>
+          <div class="thumb"><img src="20200508_171408.jpg" alt="Baño privado"></div>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="card">
+          <img src="20200508_171919.jpg" alt="Salón amplio y luminoso">
+          <p>Salón con luz natural y zona de descanso</p>
+        </div>
+        <div class="card">
+          <img src="20200508_171736.jpg" alt="Dormitorio individual">
+          <p>Habitación individual cómoda y funcional</p>
+        </div>
+        <div class="card">
+          <img src="20200508_170843.jpg" alt="Fachada del alojamiento frente al mar">
+          <p>Exterior del alojamiento junto a la playa</p>
+        </div>
+        <div class="card">
+          <img src="20200508_171226.jpg" alt="Vista desde la ventana hacia la playa">
+          <p>Vistas abiertas al mar desde el interior</p>
+        </div>
+        <div class="card">
+          <img src="20200508_171331.jpg" alt="Acceso exterior y terraza">
+          <p>Acceso exterior y terraza del apartamento</p>
+        </div>
+        <div class="card">
+          <img src="20200508_171851.jpg" alt="Pasillo interior">
+          <p>Distribución interior del apartamento</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Precios orientativos</h2>
+      <div class="price-grid">
+        <div class="price">
+          <div class="muted">Temporada baja</div>
+          <div class="amount">90€</div>
+          <div class="muted">por noche</div>
+        </div>
+        <div class="price">
+          <div class="muted">Temporada media</div>
+          <div class="amount">120€</div>
+          <div class="muted">por noche</div>
+        </div>
+        <div class="price">
+          <div class="muted">Temporada alta</div>
+          <div class="amount">150€</div>
+          <div class="muted">por noche</div>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:14px;">Consulta disponibilidad exacta y mejor precio directo por WhatsApp.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Puntos fuertes</h2>
+      <div class="review-grid">
+        <div class="review">
+          <strong>Ubicación privilegiada</strong>
+          <p class="muted">Alojamiento situado frente al mar, en una de las zonas más atractivas de Corralejo.</p>
+        </div>
+        <div class="review">
+          <strong>Perfecto para 4 personas</strong>
+          <p class="muted">Una distribución práctica con 3 habitaciones para familias o pequeñas escapadas.</p>
+        </div>
+        <div class="review">
+          <strong>Vistas y terraza</strong>
+          <p class="muted">La terraza cerrada y las vistas abiertas convierten la estancia en algo especial.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <h2>Ubicación</h2>
+          <p class="muted">
+            Situado en Corralejo, en una zona ideal para disfrutar de la playa, del paseo
+            y del ambiente del norte de Fuerteventura. Una base perfecta para unas vacaciones
+            relajadas junto al mar.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20consultar%20disponibilidad%20en%20Rel%C3%A1jate%20y%20Disfruta%20Corralejo">Consultar disponibilidad</a>
+          </div>
+        </div>
+        <div>
+          <iframe class="map" src="https://www.google.com/maps?q=Corralejo,+Fuerteventura&output=embed" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2 style="margin-top:0;">Reserva directa y ahorra</h2>
+        <p style="max-width:760px; opacity:.94;">
+          Consulta tus fechas por WhatsApp y reserva directamente con atención personalizada.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20reservar%20Rel%C3%A1jate%20y%20Disfruta%20Corralejo">Hablar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <a class="floating-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20Rel%C3%A1jate%20y%20Disfruta%20Corralejo">WhatsApp</a>
+
+  <footer class="footer">
+    Relájate y Disfruta Corralejo · Fuerteventura
+  </footer>
 
 </body>
 </html>
