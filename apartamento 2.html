@@ -5,7 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Corralejo Downtown · Apartamento en Corralejo centro · Reserva directa</title>
   <meta name="description" content="Corralejo Downtown, apartamento en el centro de Corralejo. 1 dormitorio, terraza, wifi y aire acondicionado. Reserva directa por WhatsApp." />
+  <section class="gallery">
+  <div class="gallery-grid">
+
+    <!-- PRINCIPAL -->
+    <div class="main-img">
+      <img src="downtown-salon.jpg" alt="Salón luminoso Corralejo Downtown">
+    </div>
+
+    <!-- SECUNDARIAS -->
+    <div><img src="downtown-cocina.jpg"></div>
+    <div><img src="downtown-habitacion.jpg"></div>
+    <div><img src="downtown-bano.jpg"></div>
+    <div><img src="downtown-salon2.jpg"></div>
+    <div><img src="downtown-vistas1.jpg"></div>
+    <div><img src="downtown-vistas2.jpg"></div>
+
+  </div>
+</section>
   <style>
+    .gallery {
+  margin-top: 30px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-auto-rows: 180px;
+  gap: 10px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* imagen grande */
+.main-img {
+  grid-row: span 2;
+}
     :root{
       --bg:#f6f7fb;
       --text:#162033;
