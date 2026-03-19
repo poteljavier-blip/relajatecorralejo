@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Corralejo Downtown · Apartamento en Corralejo centro · Reserva directa</title>
   <meta name="description" content="Corralejo Downtown, apartamento en el centro de Corralejo. 1 dormitorio, terraza, wifi y aire acondicionado. Reserva directa por WhatsApp." />
-  <section class="gallery">
+ 
   <div class="gallery-grid">
 
     <!-- PRINCIPAL -->
@@ -403,8 +403,9 @@
     }
   </style>
 </head>
+ 
 <body>
-
+ <section class="gallery">
   <header class="hero">
     <div class="container hero-inner">
       <div class="eyebrow">Centro de Corralejo · Terraza · Reserva directa</div>
@@ -566,6 +567,34 @@
   <a class="floating-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20Corralejo%20Downtown" target="_blank">
     WhatsApp
   </a>
+ <script>
+document.querySelectorAll('.gallery-grid img').forEach(img => {
+  img.addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.background = 'rgba(0,0,0,0.9)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = 9999;
 
+    const bigImg = document.createElement('img');
+    bigImg.src = img.src;
+    bigImg.style.maxWidth = '90%';
+    bigImg.style.maxHeight = '90%';
+    bigImg.style.borderRadius = '10px';
+
+    overlay.appendChild(bigImg);
+
+    overlay.onclick = () => overlay.remove();
+
+    document.body.appendChild(overlay);
+  });
+});
+</script>
 </body>
 </html>
