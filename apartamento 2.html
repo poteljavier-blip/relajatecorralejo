@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corralejo Downtown · Apartamento en Corralejo centro · Reserva directa</title>
+  <meta name="description" content="Corralejo Downtown, apartamento en el centro de Corralejo. 1 dormitorio, terraza, wifi y aire acondicionado. Reserva directa por WhatsApp." />
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --text:#162033;
+      --muted:#5d687a;
+      --primary:#0d1b3d;
+      --accent:#25D366;
+      --card:#ffffff;
+      --line:#e8edf5;
+      --radius:22px;
+      --shadow:0 18px 45px rgba(13,27,61,.10);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    img{display:block; max-width:100%}
+    a{text-decoration:none; color:inherit}
+
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px 24px;
+      border-radius:999px;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+      transition:.25s ease;
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+    .btn-wa{background:var(--accent); color:#fff}
+    .btn-dark{background:#fff; color:var(--primary)}
+
+    .hero{
+      position:relative;
+      min-height:88vh;
+      display:flex;
+      align-items:center;
+      color:#fff;
+      background:
+        linear-gradient(90deg, rgba(8,18,44,.82) 0%, rgba(8,18,44,.50) 38%, rgba(8,18,44,.18) 100%),
+        url('20200508_171851.jpg') center/cover no-repeat;
+    }
+
+    .hero-inner{
+      max-width:760px;
+      padding:90px 0;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:9px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.25);
+      margin-bottom:18px;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    h1{
+      font-size:clamp(42px, 7vw, 74px);
+      line-height:1.02;
+      margin:0 0 16px;
+      letter-spacing:-1px;
+    }
+
+    .hero-en{
+      opacity:.9;
+      font-size:18px;
+      margin:0 0 10px;
+    }
+
+    .lead{
+      font-size:clamp(20px, 2.2vw, 26px);
+      margin:0 0 10px;
+      max-width:760px;
+    }
+
+    .sublead{
+      margin:0 0 20px;
+      font-size:18px;
+      opacity:.95;
+      max-width:720px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .direct-note{
+      margin-top:12px;
+      font-size:15px;
+      font-weight:700;
+      color:#fff;
+      opacity:.95;
+    }
+
+    .hero-box{
+      background:#fff;
+      color:var(--text);
+      padding:22px;
+      border-radius:16px;
+      margin-top:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,.12);
+      max-width:640px;
+    }
+
+    .hero-box strong{
+      display:block;
+      font-size:20px;
+      margin-bottom:10px;
+    }
+
+    .hero-box ul{
+      margin:0;
+      padding-left:22px;
+    }
+
+    .chips{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .chip{
+      background:rgba(255,255,255,.16);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:700;
+      backdrop-filter:blur(3px);
+    }
+
+    .score{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .score-num{
+      background:#003580;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:8px;
+      font-weight:700;
+    }
+
+    .score-text{
+      color:#fff;
+      font-weight:700;
+    }
+
+    .section{
+      padding:72px 0;
+    }
+
+    .section h2{
+      font-size:40px;
+      margin:0 0 18px;
+      line-height:1.05;
+    }
+
+    .muted{color:var(--muted)}
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:28px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .stat{
+      background:#f7f9fc;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      text-align:center;
+      font-weight:700;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .feature{
+      background:#f7f9fc;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 16px;
+      font-weight:700;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns:1.3fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+
+    .gallery-main img,
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .side-photos{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .thumb{
+      min-height:220px;
+    }
+
+    .reviews{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .review{
+      background:#fff;
+      border-radius:18px;
+      padding:22px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .review-title{
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .price-box{
+      background:#0d1b3d;
+      color:#fff;
+      border-radius:24px;
+      padding:30px;
+      box-shadow:var(--shadow);
+    }
+
+    .price-box h3{
+      margin:0 0 10px;
+      font-size:30px;
+    }
+
+    .price-box ul{
+      margin:14px 0 0;
+      padding-left:20px;
+    }
+
+    .footer-cta{
+      padding:70px 0;
+      background:#0d1b3d;
+      color:#fff;
+      text-align:center;
+    }
+
+    .footer-cta h2{
+      margin-top:0;
+      font-size:42px;
+    }
+
+    .footer-cta p{
+      max-width:760px;
+      margin:0 auto 24px;
+      font-size:18px;
+      opacity:.95;
+    }
+
+    .floating-wa{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:20;
+      background:#25D366;
+      color:#fff;
+      font-weight:700;
+      padding:16px 18px;
+      border-radius:999px;
+      box-shadow:0 14px 34px rgba(37,211,102,.35);
+    }
+
+    @media (max-width:980px){
+      .grid-2,
+      .gallery,
+      .reviews{
+        grid-template-columns:1fr;
+      }
+
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width:640px){
+      .side-photos{
+        grid-template-columns:1fr;
+      }
+
+      .stats,
+      .features{
+        grid-template-columns:1fr;
+      }
+
+      .thumb{min-height:240px}
+      .hero{min-height:auto}
+      .hero-inner{padding:70px 0}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="container hero-inner">
+      <div class="eyebrow">Centro de Corralejo · Terraza · Reserva directa</div>
+
+      <h1>Corralejo Downtown</h1>
+
+      <p class="hero-en">Apartment in central Corralejo · 1 bedroom · Terrace · Air conditioning</p>
+
+      <p class="lead">Apartamento acogedor en el centro de Corralejo, a pocos minutos caminando de la playa.</p>
+
+      <p class="sublead">
+        Ideal para una escapada cómoda en Fuerteventura, con 1 dormitorio, terraza, wifi, aire acondicionado
+        y todo lo necesario para disfrutar del centro y la costa.
+      </p>
+
+      <p class="direct-note">💸 Mejor precio reservando directamente · Sin comisiones</p>
+
+      <div class="hero-actions">
+        <a class="btn btn-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20reservar%20en%20Corralejo%20Downtown.%20%C2%BFEst%C3%A1%20disponible%20para%20mis%20fechas%3F" target="_blank">
+          Reservar por WhatsApp ahora
+        </a>
+        <a class="btn btn-dark" href="#galeria">Ver fotos</a>
+      </div>
+
+      <div class="hero-box">
+        <strong>🔥 Reserva directa con mejor atención</strong>
+        <ul>
+          <li>✔ Mejor precio reservando directamente</li>
+          <li>✔ Sin comisiones</li>
+          <li>✔ Atención rápida por WhatsApp</li>
+          <li>✔ Ubicación ideal para moverse a pie</li>
+        </ul>
+      </div>
+
+      <div class="chips">
+        <div class="chip">⭐ Muy bien valorado por la ubicación</div>
+        <div class="chip">⏳ Consulta tus fechas antes de que se ocupen</div>
+      </div>
+
+      <div class="score">
+        <div class="score-num">8.7</div>
+        <div class="score-text">Muy bien · Centro de Corralejo</div>
+      </div>
+    </div>
+  </header>
+
+  <section style="padding:28px 0 10px 0; background:#f6f7fb;">
+    <div class="container">
+      <div class="reviews">
+        <div class="review">
+          <div class="review-title">“Ubicación muy cómoda”</div>
+          <div class="muted">Perfecto para ir caminando a la playa, restaurantes y ambiente de Corralejo.</div>
+        </div>
+        <div class="review">
+          <div class="review-title">“Ideal para una escapada”</div>
+          <div class="muted">Apartamento práctico, luminoso y cómodo para descansar después de un día en la isla.</div>
+        </div>
+        <div class="review">
+          <div class="review-title">“Reserva rápida y sencilla”</div>
+          <div class="muted">Consulta disponibilidad directamente por WhatsApp y recibe respuesta rápida y cercana.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div class="card">
+        <h2>Tu estancia en el centro de Corralejo</h2>
+        <p class="muted">
+          Corralejo Downtown es una opción perfecta para quienes buscan una estancia cómoda,
+          práctica y bien ubicada, cerca de la playa y del centro.
+        </p>
+
+        <div class="stats">
+          <div class="stat">2 personas</div>
+          <div class="stat">1 dormitorio</div>
+          <div class="stat">1 baño</div>
+          <div class="stat">Terraza</div>
+        </div>
+      </div>
+
+      <div class="price-box">
+        <h3>Reserva directa</h3>
+        <p>Consulta disponibilidad y precio por WhatsApp en pocos minutos.</p>
+        <a class="btn btn-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20consultar%20disponibilidad%20en%20Corralejo%20Downtown" target="_blank">
+          Consultar fechas
+        </a>
+        <ul>
+          <li>Atención directa</li>
+          <li>Sin intermediarios</li>
+          <li>Mejores condiciones reservando directo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="galeria" class="section" style="padding-top:10px;">
+    <div class="container">
+      <h2>Galería</h2>
+      <p class="muted">Espacios cuidados, ambiente luminoso y una estancia cómoda en Corralejo.</p>
+
+      <div class="gallery" style="margin-top:24px;">
+        <div class="gallery-main">
+          <img src="Captura de pantalla (128).png" alt="Corralejo Downtown vista general" />
+        </div>
+
+        <div class="side-photos">
+          <div class="thumb"><img src="Captura de pantalla (128).png" alt="Apartamento Corralejo Downtown" /></div>
+          <div class="thumb"><img src="Captura de pantalla (128).png" alt="Dormitorio apartamento Corralejo Downtown" /></div>
+          <div class="thumb"><img src="Captura de pantalla (128).png" alt="Salón apartamento Corralejo Downtown" /></div>
+          <div class="thumb"><img src="Captura de pantalla (128).png" alt="Terraza apartamento Corralejo Downtown" /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div class="card">
+        <h2>Lo que ofrece</h2>
+        <div class="features">
+          <div class="feature">📍 Centro de Corralejo</div>
+          <div class="feature">🌐 Wifi</div>
+          <div class="feature">❄️ Aire acondicionado</div>
+          <div class="feature">🍳 Cocina equipada</div>
+          <div class="feature">🛏️ 1 dormitorio</div>
+          <div class="feature">🚿 Baño privado</div>
+          <div class="feature">☀️ Terraza</div>
+          <div class="feature">🚶 Cerca de la playa</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Ideal para</h2>
+        <p class="muted">
+          Parejas o viajeros que quieren estar bien ubicados, cerca de la playa y del ambiente de Corralejo,
+          con una estancia cómoda y funcional.
+        </p>
+        <p class="muted">
+          Una base perfecta para descubrir Fuerteventura y moverte a pie por una de las zonas más buscadas de la isla.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer-cta">
+    <div class="container">
+      <h2>¿Quieres tus fechas?</h2>
+      <p>
+        Escríbenos por WhatsApp y te confirmamos disponibilidad, precio y condiciones de forma rápida.
+      </p>
+      <a class="btn btn-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20reservar%20en%20Corralejo%20Downtown.%20%C2%BFEst%C3%A1%20disponible%20para%20mis%20fechas%3F" target="_blank">
+        Consultar disponibilidad ahora
+      </a>
+    </div>
+  </section>
+
+  <a class="floating-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20Corralejo%20Downtown" target="_blank">
+    WhatsApp
+  </a>
+
+</body>
+</html>
