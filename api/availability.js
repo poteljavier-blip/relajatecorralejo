@@ -41,7 +41,7 @@ module.exports = async function handler(req, res) {
   const apartment = req.query.apartment;
   if (!Object.prototype.hasOwnProperty.call(FEEDS, apartment)) return res.status(400).json({ error: 'Apartamento incorrecto' });
   const { arrival, departure } = req.query;
-  const valid = /^\\d{4}-\\d{2}-\\d{2}$/;
+  const valid = /^\d{4}-\d{2}-\d{2}$/;
   const arrivalTime = Date.parse(arrival);
   const departureTime = Date.parse(departure);
   if (typeof arrival !== 'string' || typeof departure !== 'string' || !valid.test(arrival) || !valid.test(departure) ||
