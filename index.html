@@ -269,6 +269,15 @@
       .card img{height:220px}
     }
   </style>
+
+  <style>
+    .date-inquiry { background:#fff; color:#162033; border-radius:20px; padding:24px; box-shadow:0 12px 32px rgba(13,27,61,.12); }
+    .date-inquiry h2 { margin:0 0 8px; }
+    .date-inquiry .date-fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin:20px 0; }
+    .date-inquiry label { display:block; font-weight:700; }
+    .date-inquiry input, .date-inquiry select { display:block; width:100%; margin-top:6px; padding:12px; border:1px solid #b9c4d5; border-radius:10px; font:inherit; }
+    .date-inquiry .date-error { color:#a51d23; font-weight:700; }
+  </style>
 </head>
 <body>
 
@@ -384,9 +393,21 @@ Beachfront apartment in Corralejo · 3 bedrooms · Up to 4 guests · Direct book
       </div>
     </div>
   </section>
+<section id="reserva" class="section" style="padding:40px 20px; max-width:1000px; margin:auto;">
+  <form class="date-inquiry" data-apartment="Relájate y Disfruta Corralejo">
+    <h2>Elige tus fechas</h2>
+    <p>Selecciona las fechas y consulta la disponibilidad directamente. Te confirmaremos el precio y las condiciones antes de reservar.</p>
+    <div class="date-fields">
+      <label>Llegada<input type="date" name="arrival" required></label>
+      <label>Salida<input type="date" name="departure" required></label>
+      <label>Personas<select name="guests"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+    </div>
+    <p class="date-error" role="alert" aria-live="polite"></p>
+    <button type="submit" class="btn btn-wa">Consultar estas fechas por WhatsApp</button>
+  </form>
+</section>
 <section style="padding:40px 20px; max-width:1000px; margin:auto;">
-
-  <h2 style="margin-bottom:20px;"><h2>Más alojamientos en Corralejo</h2></h2>
+  <h2 style="margin-bottom:20px;">Más alojamientos en Corralejo</h2>
 
   <div style="display:flex; gap:20px; flex-wrap:wrap;">
 
@@ -531,7 +552,7 @@ Beachfront apartment in Corralejo · 3 bedrooms · Up to 4 guests · Direct book
           Consulta tus fechas por WhatsApp y reserva directamente con atención personalizada.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-wa" href="https://wa.me/34607511354?text=Hola%20quiero%20reservar%20en%20Rel%C3%A1jate%20y%20Disfruta%20Corralejo.%20%C2%BFEst%C3%A1%20disponible%20para%20mis%20fechas%3F
+          <a class="btn btn-wa" href="#reserva">Elegir fechas</a>
         </div>
       </div>
     </div>
@@ -554,5 +575,34 @@ Beachfront apartment in Corralejo · 3 bedrooms · Up to 4 guests · Direct book
     </a>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll('.date-inquiry').forEach(function(form) {
+    var arrival = form.elements.arrival;
+    var departure = form.elements.departure;
+    var today = new Date();
+    var localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    arrival.min = localToday;
+    departure.min = localToday;
+    arrival.addEventListener('change', function() {
+      if (!arrival.value) return;
+      var next = new Date(arrival.value + 'T12:00:00');
+      next.setDate(next.getDate() + 1);
+      departure.min = next.toISOString().slice(0, 10);
+      if (departure.value && departure.value < departure.min) departure.value = '';
+    });
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      var error = form.querySelector('.date-error');
+      if (!arrival.value || !departure.value || departure.value <= arrival.value || arrival.value < localToday) {
+        error.textContent = 'Selecciona una llegada y una salida posterior.';
+        return;
+      }
+      error.textContent = '';
+      var message = 'Hola, quiero consultar disponibilidad para ' + form.dataset.apartment + ' del ' + arrival.value + ' al ' + departure.value + ' para ' + form.elements.guests.value + ' persona(s).';
+      window.open('https://wa.me/34607511354?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+    });
+  });
+</script>
 </body>
 </html>
