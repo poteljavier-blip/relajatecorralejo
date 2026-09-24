@@ -42,9 +42,12 @@ module.exports = async function handler(req, res) {
   if (!Object.prototype.hasOwnProperty.call(FEEDS, apartment)) return res.status(400).json({ error: 'Apartamento incorrecto' });
   const { arrival, departure } = req.query;
   const valid = /^\\d{4}-\\d{2}-\\d{2}$/;
+  const arrivalTime = Date.parse(arrival);
+  const departureTime = Date.parse(departure);
   if (typeof arrival !== 'string' || typeof departure !== 'string' || !valid.test(arrival) || !valid.test(departure) ||
-      new Date(arrival).toISOString().slice(0, 10) !== arrival || new Date(departure).toISOString().slice(0, 10) !== departure ||
-      departure <= arrival || (new Date(departure) - new Date(arrival)) / 86400000 > 90) {
+      !Number.isFinite(arrivalTime) || !Number.isFinite(departureTime) ||
+      new Date(arrivalTime).toISOString().slice(0, 10) !== arrival || new Date(departureTime).toISOString().slice(0, 10) !== departure ||
+      departure <= arrival || (departureTime - arrivalTime) / 86400000 > 90) {
     return res.status(400).json({ error: 'Fechas incorrectas' });
   }
   const urls = FEEDS[apartment].map(key => process.env[key]);
