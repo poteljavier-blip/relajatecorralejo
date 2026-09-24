@@ -40,6 +40,13 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'GET') { res.setHeader('Allow', 'GET'); return res.status(405).json({ error: 'Método no permitido' }); }
   const apartment = req.query.apartment;
   if (!Object.prototype.hasOwnProperty.call(FEEDS, apartment)) return res.status(400).json({ error: 'Apartamento incorrecto' });
+  const { arrival, departure } = req.query;
+  const valid = /^\\d{4}-\\d{2}-\\d{2}$/;
+  if (typeof arrival !== 'string' || typeof departure !== 'string' || !valid.test(arrival) || !valid.test(departure) ||
+      new Date(arrival).toISOString().slice(0, 10) !== arrival || new Date(departure).toISOString().slice(0, 10) !== departure ||
+      departure <= arrival || (new Date(departure) - new Date(arrival)) / 86400000 > 90) {
+    return res.status(400).json({ error: 'Fechas incorrectas' });
+  }
   const urls = FEEDS[apartment].map(key => process.env[key]);
   if (urls.some(url => !url || !/^https:\/\//.test(url))) return res.status(503).json({ error: 'Calendario pendiente de configurar' });
   try {
@@ -50,8 +57,9 @@ module.exports = async function handler(req, res) {
       if (!content.includes('BEGIN:VCALENDAR') || content.length > 2_000_000) throw Error('Invalid calendar');
       return datesFromIcal(content);
     }));
-    res.setHeader('Cache-Control', 'public, s-maxage=300');
-    return res.status(200).json({ blocked: merge(calendars.flat()), checkedAt: new Date().toISOString(), note: 'Disponibilidad orientativa; reserva pendiente de confirmación.' });
+    const occupied = merge(calendars.flat()).some(([start, end]) => arrival < end && departure > start);
+    res.setHeader('Cache-Control', 'private, no-store');
+    return res.status(200).json({ available: !occupied, note: 'Disponibilidad orientativa; reserva pendiente de confirmación.' });
   } catch {
     return res.status(503).json({ error: 'No se pudo comprobar la ocupación. Consulta por WhatsApp.' });
   }
