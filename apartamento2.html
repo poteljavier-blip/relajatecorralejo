@@ -519,7 +519,7 @@
 
 
 <section id="reserva" class="section" style="padding:40px 20px; max-width:1000px; margin:auto;">
-  <form class="date-inquiry" data-apartment="Corralejo Downtown">
+  <form class="date-inquiry" data-apartment="Corralejo Downtown" data-calendar="downtown">
     <h2>Elige tus fechas</h2>
     <p>Selecciona las fechas y consulta la disponibilidad directamente. Te confirmaremos el precio y las condiciones antes de reservar.</p>
     <div class="date-fields">
@@ -655,16 +655,29 @@ document.querySelectorAll('.gallery-grid img').forEach(img => {
       departure.min = next.toISOString().slice(0, 10);
       if (departure.value && departure.value < departure.min) departure.value = '';
     });
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', async function(event) {
       event.preventDefault();
       var error = form.querySelector('.date-error');
       if (!arrival.value || !departure.value || departure.value <= arrival.value || arrival.value < localToday) {
         error.textContent = 'Selecciona una llegada y una salida posterior.';
         return;
       }
-      error.textContent = '';
-      var message = 'Hola, quiero consultar disponibilidad para ' + form.dataset.apartment + ' del ' + arrival.value + ' al ' + departure.value + ' para ' + form.elements.guests.value + ' persona(s).';
-      window.open('https://wa.me/34607511354?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+      error.textContent = 'Comprobando fechas…';
+      try {
+        var query = new URLSearchParams({ apartment: form.dataset.calendar, arrival: arrival.value, departure: departure.value });
+        var response = await fetch('/api/availability?' + query.toString(), { cache: 'no-store' });
+        if (!response.ok) throw Error('No se pudo comprobar');
+        var result = await response.json();
+        if (!result.available) {
+          error.textContent = 'Estas fechas aparecen ocupadas. Elige otras o escríbenos por WhatsApp.';
+          return;
+        }
+        error.textContent = '';
+      } catch {
+        error.textContent = 'No se pudo comprobar la ocupación. Te confirmaremos las fechas por WhatsApp.';
+      }
+      var message = 'Hola, quiero consultar disponibilidad para ' + form.dataset.apartment + ' del ' + arrival.value + ' al ' + departure.value + ' para ' + form.elements.guests.value + ' persona(s). La reserva está pendiente de confirmación.';
+      window.location.href = 'https://wa.me/34607511354?text=' + encodeURIComponent(message);
     });
   });
 </script>
