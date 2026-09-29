@@ -20,10 +20,10 @@ document.querySelectorAll('.date-inquiry').forEach(form=>{
       const result=await response.json();
       if(arrival.value!==selected.arrival||departure.value!==selected.departure||form.elements.guests.value!==selected.guests)return;
       if(!result.available){status.textContent='Estas fechas aparecen ocupadas. Elige otras fechas.';return}
-      if(!Number.isInteger(result.nights)||result.nights<1||!Number.isSafeInteger(result.total)||!Number.isSafeInteger(result.nightlyRate))throw Error('quote');
-      quote.textContent=`${result.nights} noche${result.nights===1?'':'s'} × ${result.nightlyRate} € = ${result.total} € · Cancelación hasta el ${new Date(result.cancellationDeadline+'T12:00:00').toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})}.`;
+      if(!Number.isInteger(result.nights)||result.nights<3||!Number.isSafeInteger(result.total)||!Number.isSafeInteger(result.nightlyRate)||result.deposit!==result.total/5||result.balance!==result.total*4/5)throw Error('quote');
+      quote.textContent=`${result.nights} noche${result.nights===1?'':'s'} × ${result.nightlyRate} € = ${result.total} €. Señal del 20 %: ${result.deposit} €. Resto pendiente: ${result.balance} €. Cancelación hasta el ${new Date(result.cancellationDeadline+'T12:00:00').toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})}.`;
       quote.hidden=false;
-      const message=`Hola, quiero solicitar una reserva directa para ${form.dataset.apartment}. Llegada: ${selected.arrival}. Salida: ${selected.departure} (${result.nights} noche${result.nights===1?'':'s'}). Huéspedes: ${selected.guests}. Precio mostrado: ${result.total} € (${result.nightlyRate} €/noche). Cancelación hasta 15 días antes de la llegada. ¿Me confirmas la reserva y el proceso de pago?`;
+      const message=`Hola, quiero solicitar una reserva directa para ${form.dataset.apartment}. Llegada: ${selected.arrival}. Salida: ${selected.departure} (${result.nights} noche${result.nights===1?'':'s'}). Huéspedes: ${selected.guests}. Precio: ${result.total} € (${result.nightlyRate} €/noche). Señal del 20 %: ${result.deposit} €; resto pendiente: ${result.balance} €. Cancelación hasta 15 días antes de la llegada. ¿Me confirmas la reserva y cómo pagar la señal?`;
       next.href='https://wa.me/34607511354?text='+encodeURIComponent(message);
       next.hidden=false;
       status.textContent='Fechas libres según los calendarios consultados. Envía tu solicitud para confirmar precio y reserva.';
