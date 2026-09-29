@@ -65,7 +65,8 @@ module.exports = async function handler(req, res) {
     res.setHeader('Cache-Control', 'private, no-store');
     const nights = (departureTime - arrivalTime) / 86400000;
     const cancellationDeadline = new Date(arrivalTime - 15 * 86400000).toISOString().slice(0, 10);
-    return res.status(200).json({ available: !occupied, nights, nightlyRate: RATES[apartment], total: nights * RATES[apartment], cancellationDeadline, note: 'Disponibilidad orientativa; reserva pendiente de confirmación.' });
+    const total = nights * RATES[apartment];
+    return res.status(200).json({ available: !occupied, nights, nightlyRate: RATES[apartment], total, deposit: total / 5, balance: total * 4 / 5, cancellationDeadline, note: 'Disponibilidad orientativa; reserva pendiente de confirmación.' });
   } catch {
     return res.status(503).json({ error: 'No se pudo comprobar la ocupación. Consulta por WhatsApp.' });
   }
