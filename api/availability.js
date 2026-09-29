@@ -4,6 +4,7 @@ const FEEDS = {
   relajate: ['RELAX_BOOKING_ICAL', 'RELAX_AIRBNB_ICAL'],
   downtown: ['DOWNTOWN_BOOKING_ICAL', 'DOWNTOWN_AIRBNB_ICAL']
 };
+const RATES = { relajate: 120, downtown: 60 };
 
 function datesFromIcal(ical) {
   const lines = ical.replace(/\r\n[ \t]/g, '').split(/\r?\n/);
@@ -47,7 +48,7 @@ module.exports = async function handler(req, res) {
   if (typeof arrival !== 'string' || typeof departure !== 'string' || !valid.test(arrival) || !valid.test(departure) ||
       !Number.isFinite(arrivalTime) || !Number.isFinite(departureTime) ||
       new Date(arrivalTime).toISOString().slice(0, 10) !== arrival || new Date(departureTime).toISOString().slice(0, 10) !== departure ||
-      departure <= arrival || (departureTime - arrivalTime) / 86400000 > 90) {
+      departure <= arrival || (departureTime - arrivalTime) / 86400000 < 3 || (departureTime - arrivalTime) / 86400000 > 90) {
     return res.status(400).json({ error: 'Fechas incorrectas' });
   }
   const urls = FEEDS[apartment].map(key => process.env[key]);
@@ -62,7 +63,9 @@ module.exports = async function handler(req, res) {
     }));
     const occupied = merge(calendars.flat()).some(([start, end]) => arrival < end && departure > start);
     res.setHeader('Cache-Control', 'private, no-store');
-    return res.status(200).json({ available: !occupied, note: 'Disponibilidad orientativa; reserva pendiente de confirmación.' });
+    const nights = (departureTime - arrivalTime) / 86400000;
+    const cancellationDeadline = new Date(arrivalTime - 15 * 86400000).toISOString().slice(0, 10);
+    return res.status(200).json({ available: !occupied, nights, nightlyRate: RATES[apartment], total: nights * RATES[apartment], cancellationDeadline, note: 'Disponibilidad orientativa; reserva pendiente de confirmación.' });
   } catch {
     return res.status(503).json({ error: 'No se pudo comprobar la ocupación. Consulta por WhatsApp.' });
   }
