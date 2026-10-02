@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/calendarios/:apartment.ics",
+      "destination": "/api/calendar?apartment=:apartment"
+    }
+  ]
+}
