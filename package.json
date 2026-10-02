@@ -1,0 +1,12 @@
+{
+  "name": "relajatecorralejo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node tests/booking.test.js && node tests/webhook.test.js && node tests/database.test.js"
+  },
+  "dependencies": {
+    "pg": "^8.16.3",
+    "stripe": "^18.5.0"
+  }
+}

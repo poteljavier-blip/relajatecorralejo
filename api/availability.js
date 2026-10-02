@@ -5,6 +5,7 @@ const FEEDS = {
   downtown: ['DOWNTOWN_BOOKING_ICAL', 'DOWNTOWN_AIRBNB_ICAL']
 };
 const RATES = { relajate: 120, downtown: 60 };
+const {db,enabled} = require('../lib/services');
 
 function datesFromIcal(ical) {
   const lines = ical.replace(/\r\n[ \t]/g, '').split(/\r?\n/);
@@ -61,13 +62,18 @@ module.exports = async function handler(req, res) {
       if (!content.includes('BEGIN:VCALENDAR') || content.length > 2_000_000) throw Error('Invalid calendar');
       return datesFromIcal(content);
     }));
-    const occupied = merge(calendars.flat()).some(([start, end]) => arrival < end && departure > start);
+    let occupied = merge(calendars.flat()).some(([start, end]) => arrival < end && departure > start);
+    if(process.env.DATABASE_URL) {
+      const {rows}=await db().query("SELECT id FROM bookings WHERE apartment=$1 AND status IN ('held','confirmed') AND arrival<$3::date AND departure>$2::date LIMIT 1",[apartment,arrival,departure]);
+      occupied = occupied || rows.length > 0;
+    }
     res.setHeader('Cache-Control', 'private, no-store');
     const nights = (departureTime - arrivalTime) / 86400000;
     const cancellationDeadline = new Date(arrivalTime - 15 * 86400000).toISOString().slice(0, 10);
     const total = nights * RATES[apartment];
-    return res.status(200).json({ available: !occupied, nights, nightlyRate: RATES[apartment], total, deposit: total / 5, balance: total * 4 / 5, cancellationDeadline, note: 'Disponibilidad orientativa; reserva pendiente de confirmación.' });
+    return res.status(200).json({ available: !occupied, checkoutEnabled: enabled(), nights, nightlyRate: RATES[apartment], total, deposit: total / 5, balance: total * 4 / 5, cancellationDeadline, note: 'Disponibilidad orientativa; reserva pendiente de confirmación.' });
   } catch {
     return res.status(503).json({ error: 'No se pudo comprobar la ocupación. Consulta por WhatsApp.' });
   }
 };
+
