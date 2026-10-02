@@ -4,7 +4,7 @@ const {db,headers}=require('../lib/services');
 const {APARTMENTS}=require('../lib/booking');
 module.exports=async(req,res)=>{
   headers(res);
-  if(req.method!=='GET')return res.status(405).end();
+  if(!['GET','HEAD'].includes(req.method)){res.setHeader('Allow','GET, HEAD');return res.status(405).end();}
   const {apartment,token}=req.query,secret=process.env.CALENDAR_EXPORT_TOKEN;
   if(!secret||typeof token!=='string'||!APARTMENTS[apartment]||Buffer.byteLength(token)!==Buffer.byteLength(secret)||!crypto.timingSafeEqual(Buffer.from(token),Buffer.from(secret)))return res.status(404).end();
   try {
@@ -12,6 +12,8 @@ module.exports=async(req,res)=>{
     const stamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
     const events=rows.flatMap(b=>['BEGIN:VEVENT',`UID:${b.id}@relajatecorralejo.com`,`DTSTAMP:${stamp}`,`DTSTART;VALUE=DATE:${b.arrival.replace(/-/g,'')}`,`DTEND;VALUE=DATE:${b.departure.replace(/-/g,'')}`,'SUMMARY:No disponible','END:VEVENT']);
     res.setHeader('Content-Type','text/calendar; charset=utf-8');
-    return res.status(200).send(['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Relajate Corralejo//Reservas//ES','CALSCALE:GREGORIAN',...events,'END:VCALENDAR',''].join('\r\n'));
+    res.setHeader('Content-Disposition',`attachment; filename="${apartment}.ics"`);
+    if(req.method==='HEAD')return res.status(200).end();
+    return res.status(200).send(['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Relajate Corralejo//Reservas//ES','CALSCALE:GREGORIAN','METHOD:PUBLISH',`X-WR-CALNAME:${apartment==='relajate'?'Relajate y Disfruta':'Corralejo Downtown'}`,...events,'END:VCALENDAR',''].join('\r\n'));
   } catch{return res.status(503).end();}
 };
